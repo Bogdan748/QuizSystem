@@ -12,7 +12,8 @@ namespace QuizSystem
     {
         public class QuizIndexer<QuizItem>
         {
-            public List<QuizItem> list = new List<QuizItem>();
+            //Using an Indexer of type List
+            private List<QuizItem> list = new List<QuizItem>();
             public double mark =0;
 
             public void Add(QuizItem item)
@@ -32,6 +33,7 @@ namespace QuizSystem
 
         public class QuizItem
         {
+            //A class that stores the information for each Item = Question, Options, Corect Responses
             public string Question;
             public Dictionary<string, bool> Answers = new Dictionary<string, bool>();
 
@@ -49,10 +51,13 @@ namespace QuizSystem
         }
 
 
-        public static QuizzHelper.QuizIndexer<QuizItem> GetQuiz()
+        public static QuizIndexer<QuizItem> GetQuiz()
         {
-            QuizzHelper.QuizIndexer<QuizItem> Quiz = new QuizIndexer<QuizItem>();
-            
+            //A metod to start the Quiz
+
+            QuizIndexer<QuizItem> Quiz = new QuizIndexer<QuizItem>();
+
+            //Gets the cel values of a CSV,and with the help of QuizItem Constructor, makes an object for each row of the CSV
             using (TextFieldParser parser = new TextFieldParser(Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, "Quiz.csv")))
             {
                 parser.TextFieldType = FieldType.Delimited;
@@ -62,16 +67,17 @@ namespace QuizSystem
                 while (!parser.EndOfData)
                 {
                     string[] fields = parser.ReadFields();
-                    if (firstLine)//ignor firs row
+                    if (firstLine)//ignores header
                     {
                         firstLine = false;
                         continue;
                     }
-                    //Process row
+                    
                     string question = fields[0];
                     int[] correct = fields[1].Split(';').Select(Int32.Parse).ToArray();
                     string[] answers = fields.Skip(2).ToArray();
 
+                    //QuizItem Constructor
                     Quiz.Add(new QuizItem(question, answers, correct));
                 }
             }
@@ -124,9 +130,9 @@ namespace QuizSystem
                 //Eliminate the item from the list
                 questions.RemoveAt(currentItemIndex);
                 Console.WriteLine($"---------------------------");
-                //TODO: CHECK IF CORRECT
+                //Checks if corect and scores the Quiz
                 quiz.mark+=Response(correct);
-                
+                Console.WriteLine($"Mark: {quiz.mark}");
                 Console.WriteLine($"---------------------------");
             }
 
@@ -139,7 +145,7 @@ namespace QuizSystem
             Console.Write("FOR TESTING PURPOSES: Corect Items:");
             for (int j = 0; j < array.Length; j++)
             {
-                if (array[j]) Console.Write(j+1);
+                if (array[j]) Console.Write($"{j+1},");
             }
             Console.WriteLine("");
 
@@ -153,17 +159,25 @@ namespace QuizSystem
             }
 
             double scorePerOption = Math.Round((double)1 / (double)nrOfOptions, 2);
-            Console.WriteLine(scorePerOption);
-
+            Console.WriteLine();
             Console.WriteLine("Type correct option/options is/are: (The format should be '1,5,2')");
-
+            Console.Write("Answer:  ");
             string input = Console.ReadLine();
 
             int[] responses = input.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Int32.Parse).ToArray();
-
+            
+            //The marking rule is: you get a partial score for each right answer, but if you have a wrong answer the total score is 0 
             foreach(int resp in responses)
             {
-                if (array[resp - 1]) score+= scorePerOption;
+                if (array[resp - 1])
+                {
+                    score += scorePerOption;
+                }
+                else
+                {
+                    score = 0;
+                    break;
+                }
             }
 
             if (1d - score < 0.1d)
