@@ -9,10 +9,7 @@ namespace QuizSystem
     {
         static void Main(string[] args)
         {
-            string startupPath = 
-            
-            Console.WriteLine(startupPath);
-            //QuizzHelper.StartQuiz();
+            QuizzHelper.StartQuiz();
         }
     }
 }
