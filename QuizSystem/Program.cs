@@ -9,14 +9,7 @@ namespace QuizSystem
     {
         static void Main(string[] args)
         {
-            QuizzHelper.QuizIndexer<QuizzHelper.QuizItem> quiz = QuizzHelper.GetQuiz();
-
-            foreach (QuizzHelper.QuizItem item in quiz.list)
-            {
-                Console.WriteLine(item.Question);
-                Console.WriteLine(String.Join(',', item.Answers));
-
-            }
+            QuizzHelper.StartQuiz();
         }
     }
 }
