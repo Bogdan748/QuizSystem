@@ -52,7 +52,7 @@ namespace QuizSystem
         {
             QuizzHelper.QuizIndexer<QuizItem> Quiz = new QuizIndexer<QuizItem>();
             
-            using (TextFieldParser parser = new TextFieldParser("D:\\Fast Track IT\\Github4\\QuizSystem\\QuizSystem\\Quiz.csv"))
+            using (TextFieldParser parser = new TextFieldParser(Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName, "Quiz.csv")))
             {
                 parser.TextFieldType = FieldType.Delimited;
                 parser.SetDelimiters(",");
