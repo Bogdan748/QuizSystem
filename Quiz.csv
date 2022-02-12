@@ -1,5 +1,5 @@
 Intrebare,Raspuns corect,Raspuns1,Raspuns2,Raspuns3,Raspuns4,Raspuns5
-Intrebare1,"0,2",a,b,c,d,e
-Intrebare2,1,a,b,c,,
-Intrebare3,"2,4",a,b,c,d,e
-Intrebare4,2,a,b,c,,
+Intrebare1,1;2,rasp1,rasp2,rasp3,rasp4,rasp5
+Intrebare2,1,rasp1,rasp2,rasp3,,
+Intrebare3,2;4;5,rasp1,rasp2,rasp3,rasp4,rasp5
+Intrebare4,2,rasp1,rasp2,rasp3,rasp4,
