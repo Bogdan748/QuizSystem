@@ -12,7 +12,7 @@ namespace QuizSystem
         public class QuizIndexer<QuizItem>
         {
             public List<QuizItem> list = new List<QuizItem>();
-            public decimal mark=0;
+            public double mark =0;
 
             public void Add(QuizItem item)
                 {
@@ -132,27 +132,28 @@ namespace QuizSystem
             Console.WriteLine($"Your mark is {quiz.mark}");
         }
 
-        public static decimal Response(bool[] array)
+        public static double Response(bool[] array)
         {
             Console.WriteLine("");
-            Console.Write("Corect Items:");
+            Console.Write("FOR TESTING PURPOSES: Corect Items:");
             for (int j = 0; j < array.Length; j++)
             {
                 if (array[j]) Console.Write(j+1);
             }
             Console.WriteLine("");
 
-            decimal score = 0;
-            /*
+            double score = 0;
+            
             int nrOfOptions = 0;
 
             foreach (bool corect in array)
             {
                 if (corect) nrOfOptions++;
             }
-            
-            decimal scorePerOption = 1 / nrOfOptions;
-            */
+
+            double scorePerOption = Math.Round((double)1 / (double)nrOfOptions, 2);
+            Console.WriteLine(scorePerOption);
+
             Console.WriteLine("Type correct option/options is/are: (The format should be '1,5,2')");
 
             string input = Console.ReadLine();
@@ -161,10 +162,17 @@ namespace QuizSystem
 
             foreach(int resp in responses)
             {
-                if (array[resp - 1]) score++;//= scorePerOption;
+                if (array[resp - 1]) score+= scorePerOption;
             }
 
-            return score;
+            if (1d - score < 0.1d)
+            {
+                return 1;
+            }else
+            {
+                return score;
+            }
+            
         }
 
     }
