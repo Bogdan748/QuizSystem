@@ -132,20 +132,19 @@ namespace QuizSystem
                 Console.WriteLine($"---------------------------");
                 //Checks if corect and scores the Quiz
                 quiz.mark+=Response(correct);
-                Console.WriteLine($"Mark: {quiz.mark}");
                 Console.WriteLine($"---------------------------");
             }
 
-            Console.WriteLine($"Your mark is {quiz.mark}");
+            Console.WriteLine($"Quiz ended. Your final mark is {quiz.mark} out of {quiz.listLength()}");
         }
 
         public static double Response(bool[] array)
         {
             Console.WriteLine("");
-            Console.Write("FOR TESTING PURPOSES: Corect Items:");
+            Console.Write("FOR TESTING PURPOSES: Corect Items: ");
             for (int j = 0; j < array.Length; j++)
             {
-                if (array[j]) Console.Write($"{j+1},");
+                if (array[j]) Console.Write($"{j + 1} | ");
             }
             Console.WriteLine("");
 
@@ -169,6 +168,12 @@ namespace QuizSystem
             //The marking rule is: you get a partial score for each right answer, but if you have a wrong answer the total score is 0 
             foreach(int resp in responses)
             {
+                if (resp > array.Length || resp<1)
+                {
+                    score = 0;
+                    break;
+                } 
+
                 if (array[resp - 1])
                 {
                     score += scorePerOption;

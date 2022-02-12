@@ -10,6 +10,16 @@ namespace QuizSystem
         static void Main(string[] args)
         {
             QuizzHelper.StartQuiz();
+
+            Console.WriteLine("");
+            Console.WriteLine("Redo the quiz (y/n)?");
+            string input = Console.ReadLine();
+            if (input == "y")
+            {
+                Console.WriteLine($"---------------------------{Environment.NewLine}");
+                QuizzHelper.StartQuiz();
+            }
+            
         }
     }
 }
